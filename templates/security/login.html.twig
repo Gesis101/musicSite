@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+<div id="signForm" class="container ">
+
+
+<form method="post" class=" col-8  bg-light rounded-lg p-5" >
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-5 font-weight-sm text-center">Sign In</h1>
+    <div class="form-group row p-sm-1 p-md-2 p-lg-2 col-12">
+        <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-9 col-md-10 col-lg-10">
+            <input type="text"  value="{{ last_username }}" class="form-control col-sm-12 ml-5" name="username" id="inputUsername" placeholder="Username" required autofocus>
+        </div>
+    </div>
+    <div class="form-group row p-sm-1 p-md-2 p-lg-2 col-12">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-9 col-md-10 col-lg-10 ">
+            <input type="password" class="form-control col-sm-12 ml-5" id="inputPassword3" placeholder="Password" required>
+        </div>
+    </div>
+    <div class="text-center">
+        <span class="txt1 text-center">
+        Reset
+        </span>
+
+        <a href="#" class="txt2 text-center">
+            Username / Password?
+        </a>
+        <span class="txt1 text-center">
+            <br>
+        Or
+        </span>
+        <span class="txt1 text-center">
+        Create
+        </span>
+        <a href="#" class="txt2 text-center">
+            new account
+        </a>
+    </div>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+
+    <button class="form-control btn mb-1 mt-5 pl-1 btn-primary" type="submit">
+        Sign in
+    </button>
+</form>
+</div>
+{% endblock %}

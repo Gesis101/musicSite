@@ -1,5 +1,7 @@
 @import "~bootstrap";
 body {
+    width: 100vm;
+    height: auto;
     background-color: lightblue !important;
-    text-align: center;
+
 }
