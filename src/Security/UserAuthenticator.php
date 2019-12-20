@@ -46,13 +46,13 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'id' => $request->request->get('id'),
+            'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['id']
+            $credentials['username']
         );
 
         return $credentials;
@@ -65,11 +65,11 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $credentials['id']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Id could not be found.');
+            throw new CustomUserMessageAuthenticationException('User could not be found.');
         }
 
         return $user;
@@ -82,6 +82,8 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     * @param $credentials
+     * @return string|null
      */
     public function getPassword($credentials): ?string
     {
@@ -94,8 +96,8 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        return new RedirectResponse($this->urlGenerator->generate('home'));
+
     }
 
     protected function getLoginUrl()

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <div id="signForm" class="container ">
+
+        {% if app.user%}
+        <form action="{{ path('app_register') }}" method="POST" class=" col-8  bg-light rounded-lg p-5" >
+            <div class="mb-3 mt-2 text-center">
+                You are logged in as {{ app.user.active ? 'Online' : 'No' }}, <a href="{{ path('app_logout') }}">LOGOUT </a> first to create an account bro
+            </div>
+        </form>
+        {% else %}
+        <form action="{{ path('app_register') }}" method="POST" class=" col-8  bg-light rounded-lg p-5" >
+            {% if error %}
+                <div class="alert alert-danger pb-2 text-center"> Cannot create account, passwords do not match</div>
+            {% endif %}
+
+
+
+            <h1 class="h3 mb-5 font-weight-sm text-center">Register</h1>
+            <div class="form-group row p-sm-1 p-md-2 p-lg-2 col-12">
+                <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-9 col-md-10 col-lg-10">
+                    <input type="text"  value="" class="form-control col-sm-12 ml-5" name="username" id="inputUsername" placeholder="Username" required autofocus>
+                </div>
+            </div>
+            <div class="form-group row p-sm-1 p-md-2 p-lg-2 col-12">
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-9 col-md-10 col-lg-10">
+                    <input type="email"  class="form-control col-sm-12 ml-5" name="email" id="inputEmail" placeholder="Email" required >
+                </div>
+            </div>
+            <div class="form-group row p-sm-1 p-md-2 p-lg-2 col-12">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-9 col-md-10 col-lg-10 ">
+                    <input type="password" name="password" class="form-control col-sm-12 ml-5" id="password" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="form-group row p-sm-1 p-md-2 p-lg-2 col-12">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
+                <div class="col-sm-9 col-md-10 col-lg-10 ">
+                    <input type="password" name="password2" class="form-control col-sm-12 ml-5" id="password2" placeholder="Confirm Password" required>
+                </div>
+            </div>
+            <div class="text-center">
+        <span class="txt1 text-center">
+        Already have an account?
+        </span>
+
+                <a href="{{ path('app_login') }}" class="txt2 text-center">
+                    Log in
+                </a>
+            </div>
+
+            <button class="form-control btn mb-1 mt-5 pl-1 btn-primary" type="submit">
+                Create account
+            </button>
+        </form>
+
+        {% endif %}
+    </div>
+{% endblock %}

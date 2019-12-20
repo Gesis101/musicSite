@@ -18,9 +18,14 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $roles = ['ROlE_ADMIN', 'ROLE_USER'];
 
     /**
      * @var string The hashed password
@@ -29,9 +34,16 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="boolean", unique=true)
+     * @ORM\Column(type="boolean")
      */
-    private $active;
+    private $active = false;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
+
 
     public function getId(): ?string
     {
@@ -52,7 +64,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->id;
+        return (string) $this->username;
     }
 
     /**
@@ -106,14 +118,35 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+
     public function getActive(): ?bool
     {
+        $this->active = false;
         return $this->active;
     }
 
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

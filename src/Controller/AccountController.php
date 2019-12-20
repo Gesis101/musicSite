@@ -12,8 +12,8 @@ class AccountController extends AbstractController
      */
     public function index()
     {
-        return $this->render('registration/account.html.twig', [
-            'controller_name' => 'account',
+        return $this->render('views/account.html.twig', [
+            'controller_name' => 'Account',
         ]);
     }
 }
