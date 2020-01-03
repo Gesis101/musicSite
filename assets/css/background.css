@@ -1,0 +1,38 @@
+.bck {
+  background-image: url("../../public/images/mainBKG.jpg");
+  height: 50vh;
+  width: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -100;
+  position: absolute;
+}
+
+.album_1 {
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.album_1 .album_container {
+  width: 90%;
+  height: 60vh;
+  z-index: 2;
+}
+
+.album_head {
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.album_head .album_headContainer {
+  width: 75%;
+  height: auto;
+  z-index: 2;
+}
+
+/*# sourceMappingURL=background.css.map */

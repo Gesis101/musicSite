@@ -22,19 +22,19 @@ class TracklistRepository extends ServiceEntityRepository
     // /**
     //  * @return Tracklist[] Returns an array of Tracklist objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByTop3SongsOfAlbum()
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('t.song')
+            ->innerJoin('App\Entity\Albums', 'a')
+            ->where('a.id = t.album_id')
+            ->setMaxResults(3)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Tracklist

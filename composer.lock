@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8bfbd072ddecdd1399923154d162dee6",
+    "content-hash": "8c88583b6dafeadde5799b6902fd396d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1969,7 +1969,7 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v5.0.1",
+            "version": "v5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
@@ -6151,6 +6151,7 @@
                 "code",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-code",
             "time": "2019-12-10T19:21:15+00:00"
         },
         {
@@ -6205,6 +6206,7 @@
                 "events",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2018-04-25T15:33:34+00:00"
         }
     ],

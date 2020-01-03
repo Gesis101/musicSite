@@ -2,33 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b302f77-e7c8-449a-b3b9-c376ed64c6b0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20191219214342.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20191220030335.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/security/register.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/views/account.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/thabomoyo.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/background.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/mainBKG.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/ReviewsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataFixtures/AlbumFixtures.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataFixtures/ReviewFixtures.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataFixtures/TracklistFixtures.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20191231013413.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20191231013533.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Migrations/Version20191231014139.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/reviews/register.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/musicSite.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/musicSite.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/myCustom.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/myCustom.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AccountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AccountController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AlbumsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AlbumsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Albums.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Albums.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/UserAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/AlbumsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/AlbumsRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ReviewsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ReviewsRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TracklistRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TracklistRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/account.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/register.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/views/albums.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/views/albums.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/views/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/views/index.html.twig" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +46,20 @@
       <executable path="composer" />
     </execution>
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -50,6 +70,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -170,9 +197,15 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -190,23 +223,23 @@
       <recent name="$PROJECT_DIR$/templates/home" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="phpunit.xml.dist" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -220,7 +253,9 @@
       <updated>1576543737086</updated>
       <workItem from="1576543738303" duration="17246000" />
       <workItem from="1576721195131" duration="27379000" />
-      <workItem from="1576790093459" duration="17696000" />
+      <workItem from="1576790093459" duration="41520000" />
+      <workItem from="1577759811270" duration="23523000" />
+      <workItem from="1578018088706" duration="7584000" />
     </task>
     <servers />
   </component>
@@ -242,5 +277,19 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="535" y="416" key="#com.intellij.ide.util.MemberChooser" timestamp="1578018295881">
+      <screen x="0" y="23" width="2560" height="1341" />
+    </state>
+    <state x="535" y="416" key="#com.intellij.ide.util.MemberChooser/0.23.2560.1341/-1680.235.1680.1027@0.23.2560.1341" timestamp="1578018295881" />
+    <state x="428" y="428" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1578018112013">
+      <screen x="0" y="23" width="2560" height="1341" />
+    </state>
+    <state x="428" y="428" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.2560.1341/-1680.235.1680.1027@0.23.2560.1341" timestamp="1578018112013" />
+    <state x="973" y="525" key="com.intellij.ide.util.TipDialog" timestamp="1578018095244">
+      <screen x="0" y="23" width="2560" height="1341" />
+    </state>
+    <state x="973" y="525" key="com.intellij.ide.util.TipDialog/0.23.2560.1341/-1680.235.1680.1027@0.23.2560.1341" timestamp="1578018095244" />
   </component>
 </project>

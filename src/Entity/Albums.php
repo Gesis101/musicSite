@@ -27,9 +27,33 @@ class Albums
     private $title;
 
     /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $average_rating;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $category;
+
+
+
 
     public function getId(): ?int
     {
@@ -56,6 +80,18 @@ class Albums
     public function setAverageRating(?int $average_rating): self
     {
         $this->average_rating = $average_rating;
+
+        return $this;
+    }
+
+    public function getCategory(): ?int
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?int $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

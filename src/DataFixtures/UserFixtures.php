@@ -19,13 +19,17 @@ class UserFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-        $user = new User();
-        $user->setUsername('admin');
-        $user->setPassword($this->encoder->encodePassword($user, '0000'));
-        $user->setEmail('fake@fake.com');
-        $user->setActive(true);
-        $user->setRoles(['ROLE_ADMIN']);
-        $manager->persist($user);
+        for ($i = 3; $i < 19; $i++){
+            $user = new User();
+            $user->setUsername('tester'.$i);
+            $user->setPassword($this->encoder->encodePassword($user, '0000'));
+            $user->setEmail('fake@fake.com');
+            $user->setActive(true);
+            $user->setId($i);
+            $user->setRoles(['ROLE_ADMIN']);
+            $manager->persist($user);
+        }
+
         $manager->flush();
     }
 }

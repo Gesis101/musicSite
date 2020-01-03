@@ -22,19 +22,20 @@ class AlbumsRepository extends ServiceEntityRepository
     // /**
     //  * @return Albums[] Returns an array of Albums objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByUserAndCommentTop3()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('u.username, r.user_comment, a.artist, a.title, a.average_rating, a.category')
+            ->from('App\Entity\User', 'u')
+            ->innerJoin('App\Entity\Reviews', 'r')
+            ->where('u.id = r.user_id')
+            ->setMaxResults(3)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+        //just separate the logic so it also selects a single album and artist...
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Albums

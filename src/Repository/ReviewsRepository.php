@@ -22,19 +22,19 @@ class ReviewsRepository extends ServiceEntityRepository
     // /**
     //  * @return Reviews[] Returns an array of Reviews objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByUserAndCommentTop3()
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('u.username, r.user_comment')
+            ->from('App\Entity\User', 'u')
+            ->where('u.id = r.user_id')
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Reviews

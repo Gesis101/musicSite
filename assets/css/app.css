@@ -1,6 +1,9 @@
 @import "~bootstrap";
 body {
-    width: 100vm;
-    height: auto;
-    background-color: lightblue !important;
+    width: 100%;
+    height: 100%;
+    background-color: lightgrey;
 }
+
+
+
