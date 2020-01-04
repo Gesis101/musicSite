@@ -14,7 +14,7 @@ class AlbumFixtures extends Fixture
         // $manager->persist($product);
 
 
-        for ($t = 0; $t < 16; $t++){
+       for ($t = 0; $t < 16; $t++){
             $album = new Albums();
             $album->setArtist('lilTester'.$t)
                 ->setAverageRating(5)

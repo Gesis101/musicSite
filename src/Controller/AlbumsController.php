@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Albums;
 use App\Entity\Reviews;
+use App\Entity\Tracklist;
 use App\Entity\User;
+use App\Repository\ReviewsRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +16,8 @@ use App\Repository\AlbumsRepository;
 use App\Repository\TracklistRepository;
 class AlbumsController extends AbstractController
 {
+
+
     /**
      * @Route("/albums", name="albums")
      * @Route("/albums");
@@ -19,30 +25,26 @@ class AlbumsController extends AbstractController
      * @param AlbumsRepository $albumsRepository
      * @param TracklistRepository $tracklistRepository
      * @return Response
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function index(EntityManagerInterface $em, AlbumsRepository $albumsRepository, TracklistRepository $tracklistRepository)
+    public function index(EntityManagerInterface $em, AlbumsRepository $albumsRepository)
     {
         $allComments = [];
-        $repository = $em->getRepository(Reviews::class);
-        $allComments = $repository->findBy($allComments, null, 3, null);
+      //  $repository = $em->getRepository(Reviews::class);
+     //   $allComments = $repository->findBy($allComments, null, 3, null);
         $userComment = $albumsRepository->findByUserAndCommentTop3();
-        $top3Tracks = $tracklistRepository->findByTop3SongsOfAlbum();
+        $allAlbums = $albumsRepository->findByAllAlbums();
+
+
+
         return $this->render('views/albums.html.twig',
             [   'TopComments' => $allComments,
                 'controller_name' => 'Albums',
                 'user' => $userComment,
-                'top3Tracks' => $top3Tracks
+                'albums' => $allAlbums
             ]);
 
     }
-    /*public function getCommentOwner(EntityManagerInterface $entityManager){
 
-       $query = $entityManager->createQueryBuilder()
-            ->select('User.username')
-            ->from('Review','')
-            ->where('user.id = reviews.user.id');
-
-       return $query->getQuery()->execute();
-    }*/
 
 }

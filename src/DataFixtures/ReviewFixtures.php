@@ -21,6 +21,7 @@ class ReviewFixtures extends Fixture
             $review->setPostedAt($now);
             $review->setUserComment($i.". This is test comment number ".$i);
             $review->setUserId($i);
+            $review->setAlbumId($i);
             $review->setUserRating(5);
             $manager->persist($review);
         }

@@ -14,7 +14,7 @@ class TracklistFixtures extends Fixture
         // $manager->persist($product);
 
 
-        for ($i = 0; $i < 20; $i++)
+       for ($i = 0; $i < 20; $i++)
         {
             $track = new Tracklist();
              $track->setAlbumId($i);

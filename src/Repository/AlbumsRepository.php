@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Albums;
+use App\Entity\Tracklist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -25,17 +26,24 @@ class AlbumsRepository extends ServiceEntityRepository
 
     public function findByUserAndCommentTop3()
     {
-        return $this->createQueryBuilder('a')
-            ->select('u.username, r.user_comment, a.artist, a.title, a.average_rating, a.category')
-            ->from('App\Entity\User', 'u')
-            ->innerJoin('App\Entity\Reviews', 'r')
-            ->where('u.id = r.user_id')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult();
+     //   return $this->createQueryBuilder('a')
+         //   ->select('u.username, r.user_comment')
+          //  ->from('App\Entity\User', 'u')
+          //  ->where('u.id = r.user_id')
+        //    ->setMaxResults(3)
+          //  ->getQuery()
+       //     ->getResult();
         //just separate the logic so it also selects a single album and artist...
     }
 
+    public function findByAllAlbums(){
+        return $this->createQueryBuilder('a')
+            ->select('a.id, a.artist, a.title, a.average_rating, a.category')
+            ->distinct()
+            ->distinct()
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Albums
