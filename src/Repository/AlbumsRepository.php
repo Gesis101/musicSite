@@ -36,11 +36,20 @@ class AlbumsRepository extends ServiceEntityRepository
         //just separate the logic so it also selects a single album and artist...
     }
 
-    public function findByAllAlbums(){
-        return $this->createQueryBuilder('a')
-            ->select('a.id, a.artist, a.title, a.average_rating, a.category')
-            ->distinct()
-            ->distinct()
+    // /**
+    //  * @return Albums[] Returns an array of Albums objects
+    //  */
+    public function findBySearch(?string $query){
+
+        $result = $this->createQueryBuilder('a');
+
+        if ($query) {
+            $result->setParameter('query', $query)
+                ->andWhere('a.artist LIKE :query OR a.category LIKE :query OR a.title LIKE :query OR a.songs LIKE :query');
+
+        }
+
+        return $result->orderBy('a.id')
             ->getQuery()
             ->getResult();
     }

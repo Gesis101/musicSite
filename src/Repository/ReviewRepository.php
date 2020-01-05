@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Review;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use ErrorException;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 
 /**
  * @method Review|null find($id, $lockMode = null, $lockVersion = null)
@@ -35,6 +37,30 @@ class ReviewRepository extends ServiceEntityRepository
         ;
     }
     */
+    // /**
+    //  * @return Review[] Returns an array of Review objects
+    //  */
+    public function findBySearch(?string $query){
+
+        $result = $this->createQueryBuilder('r')
+        ->innerJoin('r.albums', 'a')
+            ->innerJoin('a.songs', 's');
+
+        if ($query) {
+                $result->setParameter('query', $query)
+                    ->orWhere('a.artist LIKE :query OR a.genre LIKE :query OR a.title LIKE :query OR s.song_name LIKE :query OR a.average_rating = :query');
+
+            }
+//            if (!$result->getQuery()->getResult()){
+//               return $result = $this->findAll();
+//            }
+
+
+
+        return $result
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Review

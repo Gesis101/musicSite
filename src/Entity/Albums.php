@@ -64,6 +64,11 @@ class Albums
      */
     private $songs;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $genre;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -172,6 +177,18 @@ class Albums
                 $song->setAlbum(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?string $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }
