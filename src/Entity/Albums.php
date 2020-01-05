@@ -39,7 +39,7 @@ class Albums
     /**
      * @param mixed $title
      */
-    public function setTitle($title): void
+    public function setTitle($title)
     {
         $this->title = $title;
     }
@@ -59,9 +59,15 @@ class Albums
      */
     private $reviews;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Songs", mappedBy="album")
+     */
+    private $songs;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->songs = new ArrayCollection();
     }
 
 
@@ -133,6 +139,37 @@ class Albums
             // set the owning side to null (unless already changed)
             if ($review->getAlbums() === $this) {
                 $review->setAlbums(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Songs[]
+     */
+    public function getSongs(): Collection
+    {
+        return $this->songs;
+    }
+
+    public function addSong(Songs $song): self
+    {
+        if (!$this->songs->contains($song)) {
+            $this->songs[] = $song;
+            $song->setAlbum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSong(Songs $song): self
+    {
+        if ($this->songs->contains($song)) {
+            $this->songs->removeElement($song);
+            // set the owning side to null (unless already changed)
+            if ($song->getAlbum() === $this) {
+                $song->setAlbum(null);
             }
         }
 

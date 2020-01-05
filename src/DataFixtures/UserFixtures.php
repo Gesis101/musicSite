@@ -19,7 +19,7 @@ class UserFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-        for ($i = 3; $i < 19; $i++){
+       /* for ($i = 3; $i < 19; $i++){
             $user = new User();
             $user->setUsername('tester'.$i);
             $user->setPassword($this->encoder->encodePassword($user, '0000'));
@@ -30,6 +30,6 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
 
-        $manager->flush();
+        $manager->flush();*/
     }
 }

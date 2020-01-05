@@ -50,9 +50,15 @@ class User implements UserInterface
      */
     private $reviews;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Songs", mappedBy="user")
+     */
+    private $favourite_songs;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->favourite_songs = new ArrayCollection();
     }
 
 
@@ -188,6 +194,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($review->getAuthorName() === $this) {
                 $review->setAuthorName(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Songs[]
+     */
+    public function getFavouriteSongs(): Collection
+    {
+        return $this->favourite_songs;
+    }
+
+    public function addFavouriteSong(Songs $favouriteSong): self
+    {
+        if (!$this->favourite_songs->contains($favouriteSong)) {
+            $this->favourite_songs[] = $favouriteSong;
+            $favouriteSong->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavouriteSong(Songs $favouriteSong): self
+    {
+        if ($this->favourite_songs->contains($favouriteSong)) {
+            $this->favourite_songs->removeElement($favouriteSong);
+            // set the owning side to null (unless already changed)
+            if ($favouriteSong->getUser() === $this) {
+                $favouriteSong->setUser(null);
             }
         }
 

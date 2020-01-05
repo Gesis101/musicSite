@@ -49,32 +49,34 @@
                         <div class="card-body d-flex flex-column w-100 ">
                             <div class="d-flex flex-row align-items-start border-bottom pb-2">
                                 <h5 class="mr-3 text-left pr-3 border-right border-dark card-title">
-                                    <a class="text-dark" href="#">{{ album.title }} </a>
+                                    <a class="text-dark" href="#">{{ album.albums.title }} </a>
                                 </h5>
-                                <h5 class="mr-3 pr-3 border-right border-dark text-dark">{{ album.artist }}</h5>
+                                <h5 class="mr-3 pr-3 border-right border-dark text-dark">{{ album.albums.artist }}</h5>
 
-                                <h5 class="text-muted text-wrap " style="">Category: {{ album.category }}</h5>
+                                <h5 class="text-muted text-wrap " style="">{{ album.albums.category }}</h5>
                             </div>
                             <div class="pt-3 card-group ">
-                                <h5 class=""> Top 3 Tracks :</h5>
+                                <h5 class=""> Top 3 tracks:</h5>
 {#                                if track name over 10 chars then add ... instead#}
 
                                 <ul class="list-inline ">
-                                        <li class="list-inline-item"> </li>
+                                    {% for songs in album.albums.songs %}
+                                        <li class="list-inline-item"> {{ songs.songName }}1 </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             {# Top 3 comments will be displayed below #}
-                            {% for u in user %}
-                                <div class="pt-1 border-bottom">
-                                    <p class="card-text mb-auto w-100"> <span class="text-success"> {{ u.username }}</span> {{ u.user_comment}} </p>
-                                </div>
-                            {% endfor %}
-                            <a class="text-center" href="#">See more comments</a>
+
+                                    {% for comment in  album.albums.reviews %}
+                            <div class="pt-1 border-bottom">
+                                <p class="card-text m-0 w-100"> <span class="text-success"> {{comment.authorName.username}} Says:  </span>{{ comment.comment }} </p>
+                            </div>
+                                    {% endfor %}
+                            <a class="text-center" href="#">See more ..</a>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-
+            {% endfor %}
             </div>
         </div>
     </div>

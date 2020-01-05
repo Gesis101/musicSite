@@ -3,12 +3,21 @@
 namespace App\DataFixtures;
 
 
+use App\Entity\Songs;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Reviews;
+use App\Entity\Review;
+use App\Entity\Albums;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ReviewFixtures extends Fixture
 {
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
     public function load(ObjectManager $manager)
     {
         // $product = new Product();
@@ -16,13 +25,36 @@ class ReviewFixtures extends Fixture
         date_default_timezone_set("Europe/London");
         $now = new \DateTime();
 
-        for($i = 2; $i < 19; $i++){
-            $review = new Reviews();
+        for($i = 1; $i < 5; $i++){
+           $album = new Albums();
+            $album->setTitle('We made it'.$i);
+            $album->setArtist('lil Tester'.$i);
+            $album->setAverageRating(5);
+            $album->setCategory(5);
+
+            $user = new User();
+            $user->setEmail('fake@fake.com'.$i);
+            $user->setActive(true);
+            $user->setPassword($this->encoder->encodePassword($user, '0000'));
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setUsername('user'.$i);
+
+            $songs = new Songs();
+            $songs->setAlbum($album);
+            $songs->setSongName('song_name'.$i);
+            $songs->setUser($user);
+
+
+            $review = new Review();
             $review->setPostedAt($now);
-            $review->setUserComment($i.". This is test comment number ".$i);
-            $review->setUserId($i);
-            $review->setAlbumId($i);
+            $review->setComment($i.". This is test comment number ".$i);
             $review->setUserRating(5);
+            $review->setAlbums($album);
+            $review->setAuthorName($user);
+
+            $manager->persist($songs);
+            $manager->persist($album);
+            $manager->persist($user);
             $manager->persist($review);
         }
 

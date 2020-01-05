@@ -33,6 +33,16 @@ class Review
      */
     private $albums;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $posted_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $user_rating;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +80,30 @@ class Review
     public function setAlbums(?Albums $albums): self
     {
         $this->albums = $albums;
+
+        return $this;
+    }
+
+    public function getPostedAt(): ?\DateTimeInterface
+    {
+        return $this->posted_at;
+    }
+
+    public function setPostedAt(\DateTimeInterface $posted_at): self
+    {
+        $this->posted_at = $posted_at;
+
+        return $this;
+    }
+
+    public function getUserRating(): ?int
+    {
+        return $this->user_rating;
+    }
+
+    public function setUserRating(int $user_rating): self
+    {
+        $this->user_rating = $user_rating;
 
         return $this;
     }
