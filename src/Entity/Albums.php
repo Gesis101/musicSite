@@ -69,10 +69,22 @@ class Albums
      */
     private $genre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="favourite_album")
+     */
+    private $users_favourite;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="album_fav")
+     */
+    private $user_fav;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
         $this->songs = new ArrayCollection();
+        $this->users_favourite = new ArrayCollection();
+        $this->user_fav = new ArrayCollection();
     }
 
 
@@ -189,6 +201,65 @@ class Albums
     public function setGenre(?string $genre): self
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsersFavourite(): Collection
+    {
+        return $this->users_favourite;
+    }
+
+    public function addUsersFavourite(User $usersFavourite): self
+    {
+        if (!$this->users_favourite->contains($usersFavourite)) {
+            $this->users_favourite[] = $usersFavourite;
+            $usersFavourite->setFavouriteAlbum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersFavourite(User $usersFavourite): self
+    {
+        if ($this->users_favourite->contains($usersFavourite)) {
+            $this->users_favourite->removeElement($usersFavourite);
+            // set the owning side to null (unless already changed)
+            if ($usersFavourite->getFavouriteAlbum() === $this) {
+                $usersFavourite->setFavouriteAlbum(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUserFav(): Collection
+    {
+        return $this->user_fav;
+    }
+
+    public function addUserFav(User $userFav): self
+    {
+        if (!$this->user_fav->contains($userFav)) {
+            $this->user_fav[] = $userFav;
+            $userFav->addAlbumFav($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserFav(User $userFav): self
+    {
+        if ($this->user_fav->contains($userFav)) {
+            $this->user_fav->removeElement($userFav);
+            $userFav->removeAlbumFav($this);
+        }
 
         return $this;
     }

@@ -55,10 +55,21 @@ class User implements UserInterface
      */
     private $favourite_songs;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Albums", inversedBy="users_favourite")
+     */
+    private $favourite_album;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Albums", inversedBy="user_fav")
+     */
+    private $album_fav;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
         $this->favourite_songs = new ArrayCollection();
+        $this->album_fav = new ArrayCollection();
     }
 
 
@@ -226,6 +237,44 @@ class User implements UserInterface
             if ($favouriteSong->getUser() === $this) {
                 $favouriteSong->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getFavouriteAlbum(): ?Albums
+    {
+        return $this->favourite_album;
+    }
+
+    public function setFavouriteAlbum(?Albums $favourite_album): self
+    {
+        $this->favourite_album = $favourite_album;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Albums[]
+     */
+    public function getAlbumFav(): Collection
+    {
+        return $this->album_fav;
+    }
+
+    public function addAlbumFav(Albums $albumFav): self
+    {
+        if (!$this->album_fav->contains($albumFav)) {
+            $this->album_fav[] = $albumFav;
+        }
+
+        return $this;
+    }
+
+    public function removeAlbumFav(Albums $albumFav): self
+    {
+        if ($this->album_fav->contains($albumFav)) {
+            $this->album_fav->removeElement($albumFav);
         }
 
         return $this;

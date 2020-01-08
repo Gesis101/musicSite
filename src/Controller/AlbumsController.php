@@ -7,6 +7,7 @@ use App\Entity\Review;
 use App\Entity\User;
 use App\Repository\ReviewRepository;
 use App\Repository\SongsRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,10 +32,25 @@ class AlbumsController extends AbstractController
     public function index(EntityManagerInterface $em, ReviewRepository $reviewsRepository, Request $request, AlbumsRepository $albumsRepository)
     {
         $err = null;
-
+        //! POST Values from Views.
         $q = $request->query->get('query');
         $q2 = $request->query->get('rating');
         $q3 = $request->query->get('genre');
+        $fav = $request->query->get('add');
+        $noneFav = $request->query->get('remove');
+
+
+        if (isset($fav)){
+            $albums = $albumsRepository->find($fav);
+            $albums->addUserFav($this->getUser());
+            $em->flush();
+        }
+        if (isset($noneFav)){
+            $albums = $albumsRepository->find($noneFav);
+            $albums->removeUserFav($this->getUser());
+            $em->flush();
+        }
+
 
         $query = null;
         if ($q){
@@ -58,7 +74,7 @@ class AlbumsController extends AbstractController
                 'controller_name' => 'Albums',
                 'user' => 'comment',
                 'albums' => $relatedToReviews,
-                'error' => $err
+                'error' => $err,
             ]);
 
     }
@@ -70,7 +86,7 @@ class AlbumsController extends AbstractController
      */
     public function show(Albums $albums)
     {
-
+        //Search
         return $this->render('views/albums_show.html.twig',
             ['albums' =>$albums,
                 'controller_name' => 'album_show']);
