@@ -79,18 +79,26 @@
                         <div class="card-body d-flex flex-column text-center ">
                                 {% if is_granted('ROLE_USER') %}
                                     <form  class="">
+                                    {% for c in app.user.getAlbumFav %}
 
-                                    {#{% for c in app.user.getAlbumFav %}
-                                        {{ c.artist}}
-                                    {% endfor %}#}
-                                    {% for key in album.albums.userFav %}
+                                        {% if album.albums.id  ==  c.id %}
+                                        <input type="hidden"  value="{{album.albums.id}}" name="remove">
+                                        <input class="d-block " type="image" src="{{ asset('build/images/bookmark.png') }}" value="{{ album.albums.id }}" name="remove"  alt="bookmark" width="20" height="20">
+                                        {% endif %}
+                                    {% endfor %}
+                                        {% for c in app.user.getAlbumFav|slice(0,1) %}
+                                            {% if album.albums.id  !=  c.id %}
+                                        <input type="hidden" value="{{ album.albums.id }}" name="add">
+                                        <input class="d-block " type="image" src="{{ asset('build/images/unbookmark.png') }}" value="{{ album.albums.id }}" name="add"  alt="unbookmark" width="20" height="20">
+                                            {% endif %}
+                                        {% endfor %}
+                                       {# {% if userFav.albums.id == album.albums.userFav.user.id%}
                                             <input type="hidden"  value="{{album.albums.id}}" name="remove">
                                             <input class="d-block " type="image" src="{{ asset('build/images/bookmark.png') }}" value="{{ album.albums.id }}" name="remove"  alt="bookmark" width="20" height="20">
-                                    {% else %}
+                                        {% else %}
                                             <input type="hidden" value="{{ album.albums.id }}" name="add">
                                             <input class="d-block " type="image" src="{{ asset('build/images/unbookmark.png') }}" value="{{ album.albums.id }}" name="add"  alt="unbookmark" width="20" height="20">
-
-                                     {% endfor %}
+                                        {% endif %}#}
 
                                         {# End role user if below#}
                                   {% endif %}
@@ -115,7 +123,7 @@
                                 <h5 class="text-capitalize text-center"> Top 3 tracks</h5>
 {#                                if track name over 10 chars then add ... instead#}
                                 <ul class="list-group ">
-                                    {% for songs in album.albums.songs %}
+                                    {% for songs in album.albums.songs|slice(0,2) %}
                                         <li class="list-group">
                                             <p class="text-center m-0 text-left" style="text-align: center;font-size: medium">
                                             {{ songs.songName }}

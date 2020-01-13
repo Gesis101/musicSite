@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="album_head text-white bg-dark text-center pt-5">
+        <div class="album_headContainer p-5">
+
+            {% if is_granted('ROLE_USER') %}
+            <h1 class="pt-5"> USER ADMIN EDIT PANEL</h1>
+            {%  else %}
+            <h1 class="pt-5"> USER PANEL</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="album_1  ">
+        <div class=" h-auto mb-5 album_container shadow-lg bg-light rounded">
+            {#<h1> finna put some imgs to left side. Artist, title, rating and description too.</h1> #}
+            <div class="container">
+                <h1>Editing {{ user.username|capitalize }}</h1>
+                <hr>
+                <div class="row d-flex h-100 align-content-center">
+                    <!-- left column -->
+
+                    <!-- edit form column -->
+                    <div class="col-12 personal-info  h-100">
+                        <form class="form-horizontal" role="form" method="post">
+
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Email:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" type="email" value="" name="email"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Username:</label>
+                                <div class="col-md-8">
+                                        <input class="form-control" type="text" value="" name="username"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Change Password:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="password" value="" name="password">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-8">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                    <span></span>
+                                    <input type="reset" class="btn btn-default" value="Cancel">
+                                </div>
+                            </div>
+                        </form>
+                            {% if success is not empty %}
+                        <div class="alert alert-info alert-dismissable">
+                            <a class="panel-close close" data-dismiss="alert">×</a>
+                            <i class="fa fa-coffee"></i>
+                            {{ success }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

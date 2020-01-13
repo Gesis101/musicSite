@@ -54,6 +54,31 @@ class AlbumsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function removeAlbumById($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->delete()
+            ->where('a.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByAll()
+    {
+       return $this->createQueryBuilder('a')
+            ->select('a')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByFavourites()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->join('App\Entity\User', 'u');
+
+    }
     /*
     public function findOneBySomeField($value): ?Albums
     {

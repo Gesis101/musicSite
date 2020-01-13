@@ -25,10 +25,10 @@ class ReviewFixtures extends Fixture
         date_default_timezone_set("Europe/London");
         $now = new \DateTime();
 
-        for($i = 1; $i < 5; $i++){
+        for($i = 5; $i < 10; $i++){
            $album = new Albums();
             $album->setTitle('We made it'.$i);
-            $album->setArtist('lil Tester'.$i);
+            $album->setArtist('Eminem'.$i);
             $album->setAverageRating(5);
             $album->setCategory(5);
 
@@ -36,7 +36,7 @@ class ReviewFixtures extends Fixture
             $user->setEmail('fake@fake.com'.$i);
             $user->setActive(true);
             $user->setPassword($this->encoder->encodePassword($user, '0000'));
-            $user->setRoles(['ROLE_ADMIN']);
+            $user->setRoles(['ROLE_USER']);
             $user->setUsername('user'.$i);
 
             $songs = new Songs();
@@ -55,7 +55,7 @@ class ReviewFixtures extends Fixture
             $manager->persist($songs);
             $manager->persist($album);
             $manager->persist($user);
-            $manager->persist($review);
+           $manager->persist($review);
         }
 
         $manager->flush();

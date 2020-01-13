@@ -69,7 +69,7 @@ class SecurityController extends AbstractController
 
         $err = null;
 
-        if ($request->getMethod('POST') && isset($_POST['username'] )) {
+        if ($request->getMethod() == 'POST' && isset($_POST['username'] )) {
             $user = new User();
             $user->setEmail($request->request->get('email'));
             $user->setUsername($request->request->get('username'));

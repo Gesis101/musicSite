@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AlbumsRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
+use function MongoDB\BSON\toJSON;
+
 class AlbumsController extends AbstractController
 {
 
@@ -29,7 +32,7 @@ class AlbumsController extends AbstractController
      * @param AlbumsRepository $albumsRepository
      * @return Response
      */
-    public function index(EntityManagerInterface $em, ReviewRepository $reviewsRepository, Request $request, AlbumsRepository $albumsRepository)
+    public function index(EntityManagerInterface $em, ReviewRepository $reviewsRepository, Request $request, AlbumsRepository $albumsRepository, UserInterface $user)
     {
         $err = null;
         //! POST Values from Views.
@@ -38,8 +41,10 @@ class AlbumsController extends AbstractController
         $q3 = $request->query->get('genre');
         $fav = $request->query->get('add');
         $noneFav = $request->query->get('remove');
-
-
+        $favourite = $request->query->get('favourite');
+        $userId = $user->getId();
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($userId);
+        $user = $user->getAlbumFav();
         if (isset($fav)){
             $albums = $albumsRepository->find($fav);
             $albums->addUserFav($this->getUser());
@@ -62,10 +67,13 @@ class AlbumsController extends AbstractController
         }
         $relatedToReviews = $reviewsRepository->findBySearch($query);
 
+        //Filters
+        if (isset($favourite)) {
+
+        }
 
        //If no results found return error and find all instead.
        if (!$relatedToReviews){
-           $relatedToReviews = $reviewsRepository->findAll();
            $err = 'Sorry, no relevant results found';
        }
 
@@ -75,6 +83,7 @@ class AlbumsController extends AbstractController
                 'user' => 'comment',
                 'albums' => $relatedToReviews,
                 'error' => $err,
+                'userFav'=> $user
             ]);
 
     }
@@ -84,12 +93,26 @@ class AlbumsController extends AbstractController
      * @param Albums $albums
      * @return Response
      */
-    public function show(Albums $albums)
+    public function show( Albums $albums, Request $request, UserInterface $user)
     {
         //Search
+        $comment = $request->query->get('comment');
+        $userId = $user->getId();
+        $em = $this->getDoctrine()->getManager();
+        if ($comment) {
+           $review = new Review();
+           $review->setAuthorName($user)
+               ->setComment($comment)
+               ->setPostedAt(new \DateTime())
+               ->setUserRating(5)
+               ->setAlbums($albums);
+
+           $em->persist($review);
+           $em->flush();
+
+        }
         return $this->render('views/albums_show.html.twig',
-            ['albums' =>$albums,
-                'controller_name' => 'album_show']);
+            ['albums' =>$albums, 'controller_name' => 'album_show']);
     }
 
 }

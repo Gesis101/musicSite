@@ -46,22 +46,22 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="author_name")
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="author_name", cascade={"all"})
      */
     private $reviews;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Songs", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Songs", mappedBy="user", cascade={"all"})
      */
     private $favourite_songs;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Albums", inversedBy="users_favourite")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Albums", inversedBy="users_favourite",cascade={"all"} )
      */
     private $favourite_album;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Albums", inversedBy="user_fav")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Albums", inversedBy="user_fav", cascade={"all"})
      */
     private $album_fav;
 

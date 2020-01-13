@@ -62,11 +62,26 @@
                     </div>
                 </div>
             </div>
+
     {% else %}
         <a href="{{ path("app_login") }}" class="txt2 text-center">
             Log in first to see this page
         </a>
     {% endif %}
+        </div>
+
+        <div class="row h-100 d-flex justify-content-center align-items-center pb-5" >
+            <form id="userForm">
+             <div class="col-12 align-self-center">
+                <div class="input-group" >
+                        <h5 class=""> Add comment</h5>
+                        <div class="input-group" >
+                            <textarea style="min-width: 70%" class="form-control w-100" aria-label="With textarea"  form="userForm" name="comment"></textarea>
+                            <button class="btn btn-secondary" type="submit">Post </button>
+                        </div>
+                </div>
+            </div>
+            </form>
         </div>
     </div>
     </div>

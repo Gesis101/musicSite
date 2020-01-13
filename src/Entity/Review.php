@@ -18,7 +18,7 @@ class Review
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $author_name;
 
@@ -29,7 +29,7 @@ class Review
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Albums", inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false,onDelete="CASCADE")
      */
     private $albums;
 

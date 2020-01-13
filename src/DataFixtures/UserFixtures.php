@@ -21,7 +21,7 @@ class UserFixtures extends Fixture
         // $manager->persist($product);
         for ($i = 1; $i < 3; $i++){
             $user = new User();
-            $user->setUsername('test_admin'.$i);
+            $user->setUsername('admin'.$i);
             $user->setPassword($this->encoder->encodePassword($user, '0000'));
             $user->setEmail('fake@fake.com');
             $user->setActive(true);
