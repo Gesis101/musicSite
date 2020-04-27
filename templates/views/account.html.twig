@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <div class="album_head text-white bg-dark text-center pt-5">
+        <div class="album_headContainer p-5">
+            <h1 class="pt-5"> Account</h1>
+
+        </div>
+    </div>
+
+    <div class="album_1 text-center ">
+        <div class=" h-auto mb-5 album_container shadow-lg bg-light rounded">
+            {#<h1> finna put some imgs to left side. Artist, title, rating and description too.</h1> #}
+            <div class="row pb-5 h-100 d-flex justify-content-center align-items-center ">
+                <div class="col-12 flex-column ">
+                    <div class="card">
+                        <h5 class="card-header"> Favourite albums </h5>
+                    <table class="table">
+                        <thead class="thead-dark ">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Artist</th>
+                            <th scope="col">Link to album</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                         {% for album in user.albumFav %}
+                         <tr>
+                             <th scope="row">{{ album.id }}</th>
+                             <td>{{  album.title }}</td>
+                             <td>{{  album.artist }}</td>
+                             <td><a href="{{  path('album_show', {id: album.id}) }}"> See more ..</a></td>
+                             {% endfor %}
+                            {% endfor %}
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="container">
+                    <button class="btn btn-dark"><a href="{{ path('user_edit', {id: userId}) }}"> <img style="height: 20px; width: 20px" src="{{ asset('build/images/edit.png') }}" alt="test"></a> Edit profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

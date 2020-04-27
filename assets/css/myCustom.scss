@@ -1,0 +1,31 @@
+#signForm{
+  position: absolute;
+  left: 63%;
+  top: 80%;
+  height: 100%;
+  transform: translate(-50%,-50%);
+  form{
+    -webkit-box-shadow: 0px 0px 35px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 35px -3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 35px -3px rgba(0,0,0,0.75);
+
+    .txt1 {
+      font-family: OpenSans-Regular, serif;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #999999;
+    }
+    .txt2 {
+      font-family: OpenSans-Regular, serif;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #4272d7;
+    }
+  }
+
+}
+
+.vertical{
+
+}
+

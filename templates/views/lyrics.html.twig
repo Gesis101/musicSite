@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <div class="album_head text-white bg-dark text-center pt-5">
+        <div class="album_headContainer p-5">
+            <h1 class="pt-5"> YOUR ALBUMS IN ONE PLACE</h1>
+            <p> Tell others why you like or dislike your albums </p>
+        </div>
+    </div>
+
+    <div class="album_1 text-center ">
+        <div class="container h-auto mb-5 album_container shadow-lg bg-light rounded">
+            {#<h1> finna put some imgs to left side. Artist, title, rating and description too.</h1> #}
+            <div class="row pb-5 h-100 d-flex justify-content-center align-items-center ">
+                <div class="col-12 border-bottom flex-column">
+
+                </div>
+
+                {# Album content to be shown below  #}
+
+                <div class="row m-5 h-100 d-flex justify-content-center align-items-center">
+                    {#
+                 - Album cover
+                 - Artist
+                 - Title
+                 - First 3 track lists
+                 - Stars 1/5
+                 - reviews
+             #}
+                    {# <li class="list-inline-item">{{ top3Tracks}} </li>#}
+                    {% if error %}
+                        <div class="alert alert-danger  mb-1"> {{ error }}</div>
+                    {% endif %}
+                    <div class="col-lg-12 col-md-12 col-sm-6 ">
+                        <div class="card flex-row mb-4 box-shadow w-100 text-left " style="min-width: 100%">
+                            <div class="card-body d-flex flex-column w-100 ">
+                                <div class="d-flex flex-row align-items-start border-bottom pb-2">
+                                    <h5 class="mr-3 text-left pr-3 border-right border-dark card-title">
+                                        <a class="text-dark" href="#">{{ songName }} </a>
+                                    </h5>
+                                    <h5 class="mr-3 pr-3 border-right border-dark text-dark">{{ artist }}</h5>
+                                </div>
+                                <div class="pt-3 card-group ">
+                                <p> {{ lyrics['content'].0['lyrics'] }}</p>
+                                    {# Top 3 comments will be displayed below #}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+{% endblock %}

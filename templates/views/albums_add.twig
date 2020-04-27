@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <div class="album_head text-white bg-dark text-center pt-5">
+        <div class="album_headContainer p-5">
+            <h1 class="pt-5"> YOUR ALBUMS IN ONE PLACE</h1>
+            <p> All Album reviews in one place! For your convenience </p>
+        </div>
+    </div>
+
+    <div class="album_1 text-center ">
+        <div class="container h-auto mb-5 album_container shadow-lg bg-light rounded">
+            <div class="row pb-5 h-100 d-flex justify-content-center align-items-center ">
+
+
+            {# Album content to be shown below  #}
+                {% if is_granted('ROLE_USER') %}
+                         <div class="row m- h-100 d-flex justify-content-center align-items-center">
+                             <form action="{{ path('album_add') }}" method="POST" class=" col-12  bg-light rounded-lg p-5 ">
+                               {# {% if error %}
+                                    <div class="alert alert-danger pb-2 text-center"> Cannot create account, passwords do not match
+                                    </div>
+                                {% endif %}#}
+
+
+                                <h1 class="h3 mb-5 font-weight-sm text-center">Add album</h1>
+                                <div class="form-group  p-sm-1 p-md-2  col-12 ">
+                                    <div class="d-inline-flex text-left justify-content-start" >
+                                        <label for="inputUsername" class="col-4">Title</label>
+                                        <input type="text" value="" class="form-control ml-2 col-8" name="username"
+                                               id="inputUsername" placeholder="Title" required autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group  p-sm-1 p-md-2 p-lg-2 col-12 ">
+                                    <div class="d-inline-flex text-left justify-content-start">
+                                        <label for="inputEmail" class="col-4">Artist</label>
+                                        <input type="email" class="form-control  ml-2 col-8" name="email" id="inputEmail"
+                                               placeholder="Artist" required>
+                                    </div>
+                                </div>
+                                <div class="form-group  p-sm-1 p-md-2 p-lg-2 col-12 ">
+                                    <div class="d-inline-flex text-left justify-content-start">
+                                        <label for="inputPassword3" class="col-4 ">Genre</label>
+                                        <input type="password" name="password" class="form-control  ml-2 col-8 " id="password"
+                                               placeholder="Genre" required>
+                                    </div>
+                                </div>
+                                 <span> Separate songs with , ( E.g. Song1, Song2, ...)</span>
+                                 <div class="form-group  p-sm-1 p-md-2 p-lg-2 col-12 ">
+                                    <div class="d-inline-flex text-left justify-content-start">
+                                        <label for="inputPassword3" class="col-4 col-form-label">Songs</label>
+                                        <input type="text" name="password2" class="form-control ml-2 col-8" id="password2"
+                                               placeholder="Songs" required>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+
+                                    <button class="form-control btn mb-1 mt-5 pl-1 btn-primary" type="submit">
+                                        Add Album
+                                    </button>
+                                </div>
+                            </form>
+                         </div>
+                {% endif %}
+            </div>
+         </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <div class="album_head text-white bg-dark text-center pt-5">
+        <div class="album_headContainer p-5">
+            <h1 class="pt-5"> YOUR ALBUMS IN ONE PLACE</h1>
+            <p> Tell others why you like or dislike your albums </p>
+        </div>
+    </div>
+
+    <div class="album_1 text-center ">
+        <div class="container h-auto mb-5 album_container shadow-lg bg-light rounded">
+            {#<h1> finna put some imgs to left side. Artist, title, rating and description too.</h1> #}
+            <div class="row pb-5 h-100 d-flex justify-content-center align-items-center ">
+                <div class="col-12 border-bottom flex-column">
+                    <form class="d-inline-flex align-self-center" action="{{ path('lastFM_search') }}" method="post">
+                        {#  <input class="form-control text-white" type="search" placeholder="Search"
+                                 aria-label="Search">
+                          <button class="btn btn-outline-info my-2 my-sm-0 " type="submit">Search</button>#}
+                        <div class="d-flex  ">
+                            {# Use this space for filters & use one form to submit.#}
+
+
+                            <div class="form-inline p-1 ">
+                                <input class="form-control " type="search" placeholder="Search LastFM Albums" name="query1" >
+                                <button class="form-control btn" type="submit"><i class="large material-icons">search</i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                {# Album content to be shown below  #}
+
+                <div class="row m-5 h-100 d-flex justify-content-center align-items-center">
+                    {#
+                 - Album cover
+                 - Artist
+                 - Title
+                 - First 3 track lists
+                 - Stars 1/5
+                 - reviews
+             #}
+                    {# <li class="list-inline-item">{{ top3Tracks}} </li>#}
+                    {% if error %}
+                        <div class="alert alert-danger  mb-1"> {{ error }}</div>
+                    {% endif %}
+                    {% for album in lastFMData %}
+                        <div  class="col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="card flex-row mb-4 box-shadow w-100 text-left " style="min-width: 100%">
+                                <a href="{{ album.0.url }}"><img class="card-img-right flex-auto d-none d-md-block" dalt="Album Cover [150x250]" style="width: 275px; height: 250px;" src="{{ album.0.image.3.0['#text'] }}" data-holder-rendered="true"></a>
+                                <div class="card-body d-flex flex-column text-center ">
+                                    <div class="d-inline-flex align-self-center  text-center pb-2 " style="">
+
+                                        <small class="text-muted pr-1 " style="">Title </small>
+                                        <h1 class="mr-3 pr-3 border-right border-dark card-title" style="text-align: center;font-size: medium">
+                                            <a class="text-dark text-capitalize" href="#">{{ album.0.name }} </a>
+                                        </h1>
+
+                                        <small class="text-muted pr-1"> Artist </small>
+                                        <h1 class="mr-3 pr-3 border-right border-dark card-title" style="text-align: center;font-size: medium">{{ album.0.artist.name }}</h1>
+
+
+                                    </div>
+
+                                    <div class="pt-3 d-inline-block align-self-center border-bottom mb-2 w-100 ">
+                                        <h5 class="text-capitalize text-center"> Top 3 tracks</h5>
+                                        {#                                if track name over 10 chars then add ... instead#}
+                                        <ul class="list-group ">
+                                            <p> Click track to see lyrics</p>
+                                            {% for songs in album.1.0 %}
+                                                <li class="list-group">
+                                                    <p class="text-center m-0 text-left" style="text-align: center;font-size: medium">
+                                                        <a href="{{ path('lyrics', {'artist': album.0.artist.name | url_encode, 'songName': songs.name |url_encode}) }}"> {{ songs.name }} </a>
+                                                    </p>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

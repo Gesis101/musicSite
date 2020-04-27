@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <div class="album_head text-white bg-dark text-center pt-5">
+        <div class="album_headContainer p-5">
+            <h1 class="pt-5"> ADMIN PANEL</h1>
+        </div>
+    </div>
+
+    <div class="album_1 text-center ">
+        <div class=" h-auto mb-5 album_container shadow-lg bg-light rounded">
+            {#<h1> finna put some imgs to left side. Artist, title, rating and description too.</h1> #}
+            <div class="row pb-5 h-100 d-flex justify-content-center align-items-center ">
+                <div class="col-12 flex-column ">
+                    <div class="card">
+                        <h5 class="card-header">User Management</h5>
+
+                        <form method="get">
+
+
+                        <table class="table">
+                            <thead class="thead-dark ">
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">email</th>
+                                <th scope="col" colspan="2">manage</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <th scope="row">{{ user.id }}</th>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                {% if 'ROLE_ADMIN' in user.roles%}
+                                    <td colspan="2" class="text-danger">Can't alter ADMIN user</td>
+                                {% else %}
+                                    <td><a href="{{ path('user_edit', {id: user.id}) }}"> <img style="height: 20px; width: 20px" src="{{ asset('build/images/edit.png') }}" alt="test"></a></td>
+                                    <td><a href="{{ path('remove', {id: user.id}) }}"> <img style="height: 20px; width: 20px" src="{{ asset('build/images/remove.svg') }}" alt="test"></a></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row pb-5 h-100 d-flex justify-content-center align-items-center ">
+                <div class="col-12 flex-column ">
+                    <div class="card">
+                        <h5 class="card-header">Album Management</h5>
+
+                        <form method="post">
+
+                            <table class="table">
+                                <thead class="thead-dark ">
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Artist</th>
+                                    <th scope="col" colspan="2">manage</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for album in albums %}
+
+                                    <input type="hidden" value="{{album.id}}" name="removeAlbum">
+                                    <tr>
+                                        <th scope="row">{{ album.id }}</th>
+                                        <td>{{ album.title }}</td>
+                                        <td>{{ album.artist }}</td>
+                                        <td><a style="" class="page-link" href="{{ path('removeAlbum', {id: album.id}) }}"> <img style="height: 20px; width: 20px" src="{{ asset('build/images/remove.svg') }}" alt="test">Remove</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container h-100">
+    <div class="row h-100  align-items-center pt-5 pb-5 justify-content-center " style="position: relative; color: black">
+        <div class="text-center col-12">
+            <h4> Your current Location: {{ weather['request']['query'] }} </h4>
+            <h5> Description: {{ weather['current']['weather_descriptions'][0] }}</h5>
+            <h5> Temperature: {{ weather['current']['temperature'] }}&#8451</h5>
+            <img class="rounded" src="{{ weather['current']['weather_icons'][0] }}">
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}
+
