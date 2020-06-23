@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Songs;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use App\Entity\Review;
 use App\Entity\Albums;
 use App\Entity\User;

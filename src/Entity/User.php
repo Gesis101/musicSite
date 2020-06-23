@@ -7,87 +7,104 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Entity\ApiToken;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource(
  *     attributes={
  *     "access_control"="is_granted('ROLE_ADMIN')",
- *     "normalization_context"={"groups"={"read"}},
- *     "denormalization_context"={"groups"={"write"}},
+ *     "normalization_context"={"groups"={"user:read"}},
+ *     "denormalization_context"={"groups"={"user:write"}},
+ *     "enable_max_depth"=true
  *  },
- *      itemOperations={
-
- *     "get"={"is_granted('ROLE_USER')"},
- *     "put"={"is_granted('ROLE_USER')"}
- *  },
-
+ *
+ *      collectionOperations={"get"},
+ *        itemOperations={
+ *                  "get"={"access_control"="is_granted('ROLE_ADMIN')"},
+ *                  "put"= {"access_control"="is_granted('ROLE_ADMIN')  "}
+ * }
  * )
  *
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", unique=true)
+     * @Groups({"user:read" })
+     *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"user:read", "user:write"})
+     * @var User
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:read"})
      */
     private $roles = ["ROLE_USER"];
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:write"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="boolean")
+     *
      */
     private $active = false;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="author_name", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="authorName", cascade={"all"})
      * @ApiSubresource()
-     * @Groups({"read", "write"})
+     *
      */
     private $reviews;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Songs", mappedBy="user", cascade={"all"})
-     * @Groups({"read"})
+     *
      */
     private $favourite_songs;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Albums", inversedBy="user_fav", cascade={"all"})
      * @ApiSubresource()
-     * @Groups({"read"})
+     *
      */
     private $album_fav;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ApiToken", mappedBy="user", orphanRemoval=true)
+     * @Groups({"user:read"})
+     */
+    private $apiTokens;
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
         $this->favourite_songs = new ArrayCollection();
         $this->album_fav = new ArrayCollection();
+        $this->apiTokens = new ArrayCollection();
+
     }
 
 
@@ -284,5 +301,58 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|ApiToken[]
+     */
+    public function getApiTokens(): Collection
+    {
+        return $this->apiTokens;
+    }
+
+    public function addApiToken(ApiToken $apiToken): self
+    {
+        if (!$this->apiTokens->contains($apiToken)) {
+            $this->apiTokens[] = $apiToken;
+            $apiToken->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApiToken(ApiToken $apiToken): self
+    {
+        if ($this->apiTokens->contains($apiToken)) {
+            $this->apiTokens->removeElement($apiToken);
+            // set the owning side to null (unless already changed)
+            if ($apiToken->getUser() === $this) {
+                $apiToken->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function giveApiToken(ApiToken $apiToken)
+    {
+        if (!$this->apiTokens->contains($this->apiTokens)){
+            $apiToken->setUser($this);
+
+            return $apiToken;
+        }
+        return $this->getApiTokens();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        // TODO: Implement isEqualTo() method.
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+        return true;
     }
 }

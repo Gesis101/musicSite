@@ -10,11 +10,11 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191219153152 extends AbstractMigration
+final class Version20200428005606 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return ' ';
     }
 
     public function up(Schema $schema) : void
@@ -22,9 +22,8 @@ final class Version20191219153152 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE tracklist (id INT AUTO_INCREMENT NOT NULL, song VARCHAR(255) NOT NULL, album_id INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE reviews ADD posted_at DATETIME NOT NULL');
-        $this->addSql('ALTER TABLE albums ADD average_rating INT DEFAULT NULL');
+        $this->addSql('CREATE TABLE api_token (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, token VARCHAR(255) NOT NULL, expires_at DATETIME NOT NULL, INDEX IDX_7BA2F5EBA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE api_token ADD CONSTRAINT FK_7BA2F5EBA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +31,7 @@ final class Version20191219153152 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE tracklist');
-        $this->addSql('ALTER TABLE albums DROP average_rating');
-        $this->addSql('ALTER TABLE reviews DROP posted_at');
+        $this->addSql('DROP TABLE api_token');
+        $this->addSql('ALTER TABLE review CHANGE user_rating user_rating INT DEFAULT NULL');
     }
 }

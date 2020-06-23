@@ -18,6 +18,8 @@ class LastFMController extends AbstractController
     {
 
         $albumData = $this->getTopAlbums();
+
+
         return $this->render('views/lastFm.html.twig',[
             'controller_name' => 'lastFM',
             'lastFMData' => $albumData,
@@ -78,7 +80,9 @@ class LastFMController extends AbstractController
                 'exceptions' => false
             ]
         ]);
-        $response = $client->request('GET', '/2.0/?method=chart.getTopArtists&limit=30&api_key='.$this->apiKey.'&format=json');
+        $response = $client->request('GET',
+            '/2.0/?method=chart.getTopArtists&limit=30&api_key='.$this->apiKey.'&format=json'
+        );
 
         $data = json_decode($response->getBody(), true);
         $artists = [];
@@ -89,7 +93,7 @@ class LastFMController extends AbstractController
         return $artists;
     }
     //Gets top albums of the top 15 artists
-    private function getTopAlbums(){
+    public function getTopAlbums(){
         $artists = $this->getLastFMTop15Artists();
         $client = new Client([
             // Base URI is used with relative requests
@@ -104,15 +108,15 @@ class LastFMController extends AbstractController
         $x = 0;
         foreach ($artists as $artist){
             $response = $client->request('GET', '/2.0/?method=artist.getTopAlbums&limit=1&artist='.$artist.'&api_key='.$this->apiKey.'&format=json');
-            $response1 = $client->request('GET', '/2.0/?method=artist.getTopTracks&artist='.$artist.'&api_key='.$this->apiKey.'&format=json&limit=3');
+            $response1 = $client->request('GET', '/2.0/?method=artist.getTopTracks&artist='.$artist.'&api_key='.$this->apiKey.'&format=json&limit=6');
 
             $data = json_decode($response->getBody()->getContents(), true);
             $data1 = json_decode($response1->getBody()->getContents(), true);
+
             array_push($albums, $data['topalbums']['album']);
             array_push($tracks, $data1['toptracks']['track']);
-
             array_push($albums[$x],$tracks[$x]);
-            // array_push($albums, $data['topalbums']['album'][0]['name'],$data['topalbums']['album'][0]['artist']['name'], $data['topalbums']['album'][0]['url'] ,$data['topalbums']['album'][0]['image'][1]['#text']);
+
             $x++;
         }
 

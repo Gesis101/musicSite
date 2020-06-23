@@ -9,7 +9,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
  * @ApiResource(
- *
+ *   attributes={
+ *     "normalization_context"={"groups"={"reviews:read"}}
+ *      },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN') "},
+ *         "delete"={ "access_control" = "is_granted('ROLE_ADMIN') or object.getAuthorName() == user "}
+ *     },
+ *     collectionOperations={
+ *              "get",
+ *              "post"
+ * }
 
  * )
  */
@@ -19,38 +30,39 @@ class Review
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     *
+     * @Groups({"reviews:read", "user:read"})
      */
     private $id;
 
     /**
+     * @var User
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @Groups({"read"})
+     * @Groups({"user:read", "album:read", "reviews:read" })
      */
-    private $author_name;
+    private $authorName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
+     * @Groups({"reviews:read", "user:read"})
      */
     private $comment;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Albums", inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false,onDelete="CASCADE")
-     * @Groups({"read"})
+     * @Groups({"user:read", "reviews:read"})
      */
     private $albums;
 
     /**
-     * @ORM\Column(type="datetime")
-     *
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"user:read"})
      */
-    private $posted_at;
+    private $postedAt;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      */
     private $user_rating;
@@ -62,12 +74,12 @@ class Review
 
     public function getAuthorName(): ?User
     {
-        return $this->author_name;
+        return $this->authorName;
     }
 
-    public function setAuthorName(?User $author_name): self
+    public function setAuthorName(?User $authorName): self
     {
-        $this->author_name = $author_name;
+        $this->authorName = $authorName;
 
         return $this;
     }
@@ -98,12 +110,12 @@ class Review
 
     public function getPostedAt(): ?\DateTimeInterface
     {
-        return $this->posted_at;
+        return $this->postedAt;
     }
 
-    public function setPostedAt(\DateTimeInterface $posted_at): self
+    public function setPostedAt(\DateTimeInterface $postedAt): self
     {
-        $this->posted_at = $posted_at;
+        $this->postedAt = $postedAt;
 
         return $this;
     }

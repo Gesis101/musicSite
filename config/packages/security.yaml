@@ -15,18 +15,26 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: lazy
             guard:
                 authenticators:
+                    - App\Security\ApiTokenAuthenticator
                     - App\Security\UserAuthenticator
+                entry_point: App\Security\ApiTokenAuthenticator
             logout:
                 path: app_logout
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 2592000 # 30 days in seconds
+            switch_user: true
             form_login:
                 login_path: app_login
                 check_path: app_login
                 provider: app_user_provider
                 username_parameter: "username"
                 password_parameter: "password"
+            json_login:
+                check_path: app_login
 
 
                 # where to redirect after logout
@@ -43,5 +51,5 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/albums, roles: ROLE_USER }
         - { path: ^/lastFM/search, method: POST }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

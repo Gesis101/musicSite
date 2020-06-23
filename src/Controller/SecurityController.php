@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ApiToken;
 use App\Entity\User;
 use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManager;
@@ -71,12 +72,14 @@ class SecurityController extends AbstractController
 
         if ($request->getMethod() == 'POST' && isset($_POST['username'] )) {
             $user = new User();
+            $api = new ApiToken($user);
             $user->setEmail($request->request->get('email'));
             $user->setUsername($request->request->get('username'));
             $user->setPassword($encoder->encodePassword($user, $request->request->get('password')));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
+            $em->persist($api);
             $em->flush();
 
             return $guardHandler->authenticateUserAndHandleSuccess($user, $request, $loginAuthenticator, 'main');

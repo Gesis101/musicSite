@@ -39,11 +39,10 @@ class HomeController extends AbstractController
     public function getWeatherData()
     {
         $accessKey = 'a1c1eba1acc1e526b8d3b266a23b4cf9';
-        $checkMeOut = 'http://api.weatherstack.com/current?access_key=a1c1eba1acc1e526b8d3b266a23b4cf9&query=walkden';
+
         $location = $this->getUserLocation();
         $location = $location['city'];
-        $param = ['access_key' => $accessKey, 'query' => $location,
-        ];
+
         $client = new Client([
             'base_uri' => 'http://api.weatherstack.com'
         ]);

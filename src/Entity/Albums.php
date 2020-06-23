@@ -3,27 +3,33 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiSubresource;
-use JMS\Serializer\Annotation as Serializer;
-use Symfony\Component\Validator\Constraint as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AlbumsRepository")
+ * @ApiResource()
  * @ApiResource(
- *     itemOperations={
-
- *     "get"={"is_granted('ROLE_USER')"},
- *     "put"={"is_granted('ROLE_USER')"}
- *  },
  *     attributes={
- *     "normalization_context"={"groups"={"read"}},
- *     "denormalization_context"={"groups"={"write"}},
- * }
- * )
+ *     "normalization_context"={"groups"={"album:read"}}
+ *      },
+ *        itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN') "},
+ *         "delete"={ "access_control" = "is_granted('ROLE_ADMIN') "}
+ *     },
+ *     collectionOperations={
+ *              "get",
+ *              "post"
+ *         }
+ *  )
+ *
+ * @ApiFilter(SearchFilter::class, properties={"title" : "partial", "artist":"partial"})
+ * @ORM\Entity(repositoryClass="App\Repository\AlbumsRepository")
  *
  */
 class Albums
@@ -32,20 +38,20 @@ class Albums
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     *
+     * @Groups({"album:read",  "reviews:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"read"})
+     * @Groups({"album:read", "reviews:write"})
      *
      */
     private $artist;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"read"})
+     * @Groups({"album:read", "reviews:write"})
      *
      */
     private $title;
@@ -73,13 +79,22 @@ class Albums
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"read"})
+     *
      */
     private $category;
+
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"album:read"})
+     */
+    private $imageSource;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="albums")
      * @ApiSubresource()
+     * @Groups({"album:read"})
      */
     private $reviews;
 
@@ -87,7 +102,7 @@ class Albums
      * @ORM\OneToMany(targetEntity="App\Entity\Songs", mappedBy="album")
      *
      * @ApiSubresource()
-     * @Groups({"read"})
+     * @Groups({"album:read"})
      */
     private $songs;
 
@@ -115,6 +130,7 @@ class Albums
 
     public function getId(): ?int
     {
+
         return $this->id;
     }
 
@@ -253,6 +269,18 @@ class Albums
             $this->user_fav->removeElement($userFav);
             $userFav->removeAlbumFav($this);
         }
+
+        return $this;
+    }
+
+    public function getImageSource(): ?string
+    {
+        return $this->imageSource;
+    }
+
+    public function setImageSource(?string $imageSource): self
+    {
+        $this->imageSource = $imageSource;
 
         return $this;
     }

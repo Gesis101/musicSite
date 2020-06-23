@@ -91,7 +91,7 @@ class AlbumsController extends AbstractController
        if (!$relatedToReviews){
            $err = 'Sorry, no relevant results found';
        }
-
+        dump($album);
         return $this->render('views/albums.html.twig',
             [
                 'controller_name' => 'Albums',

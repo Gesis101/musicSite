@@ -7,8 +7,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -19,6 +21,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+
 
 class UserAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
@@ -28,19 +32,25 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    /**
+     * @var RouterInterface
+     */
+    private $router;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, RouterInterface $router)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->router = $router;
     }
 
     public function supports(Request $request)
     {
-        return 'app_login' === $request->attributes->get('_route')
-            && $request->isMethod('POST') && $request->isMethod('GET');
+
+        return $request->attributes->get('_route') === 'app_login'
+            && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
@@ -68,7 +78,6 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('User could not be found.');
         }
 
@@ -89,6 +98,10 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     {
         return $credentials['password'];
     }
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
+        return new AccessDeniedException();
+    }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
@@ -96,7 +109,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('albums'));
+        return new RedirectResponse($this->router->generate('albums'));
 
     }
 
@@ -104,4 +117,6 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     {
         return $this->urlGenerator->generate('app_login');
     }
+
+
 }
